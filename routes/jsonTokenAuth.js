@@ -8,17 +8,8 @@ const validInfo = require("../middleware/validInfo");
 const authorization = require("../middleware/authorization");
 require('dotenv').config();
 
-connectionString = process.env.DATABASE_URL;
-
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
-
 const client = new Client({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },

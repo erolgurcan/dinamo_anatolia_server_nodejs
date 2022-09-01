@@ -1,17 +1,10 @@
 const router = require("express").Router();
 const authorization = require("../middleware/authorization");
-const connectionString = process.env.DATABASE_URL ;
 const { Client } = require("pg");
 
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
 
 const client = new Client({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
