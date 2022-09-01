@@ -6,9 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
-const client = new Client({
-  
+const client = new Client({  
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
@@ -73,13 +71,21 @@ router.post("/scored_table", authorization, async (req, res) => {
 });
 
 
-router.post("/update_user", async () => {
+router.post("/update_user", authorization ,  async (req, res) => {
 
   try {
     const { user_name, address, postcode, country, state_region, phone_number, user_email } = req.body;
+    console.log( req.body);
+
+    await client.query( `update users \
+                                        set user_name  =  ${user_name} , address = ${address}, postcode = ${postcode}, country = ${country}, state_region  = ${state_region} ,phone_number  = ${phone_number} \
+                                          where user_email = ${user_email}`)
+
     
+    res.send(true);
+
   } catch (error) {
-    
+    console.log(error.message)
   }
 } )
 

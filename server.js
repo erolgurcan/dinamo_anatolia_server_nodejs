@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 const path = require("path");
 const { Client } = require("pg");
 
@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
   }
 
-
+console.log("asd");
 
 app.use(cors());
 app.use(express.json());
@@ -27,4 +27,3 @@ app.listen(PORT, () => {
 app.use( "/auth", require("./routes/jsonTokenAuth") );
 app.use( "/teamInfo", require("./routes/teamInfo") );
 
-//Api

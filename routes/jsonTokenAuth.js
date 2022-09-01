@@ -20,7 +20,6 @@ const client = new Client({
 });
 
 
-
 client.connect();
 
 router.post("/get-user", authorization, async (req, res) => {
@@ -43,7 +42,6 @@ router.post("/register", validInfo, async (req, res) => {
       "select * from users where  user_email = " + "'" + email + "';"
     );
 
-    console.log(user);
 
     if (user.rows.length > 0) {
       res.status(401).send("User already exists");
@@ -76,6 +74,7 @@ router.post("/is-auth", authorization, async (req, res) => {
 
 router.post("/login", validInfo, async (req, res) => {
   try {
+    console.log(process.env.NODE_ENV)
     const { email, password } = req.body;
     const user = await client.query(
       "SELECT * FROM users WHERE user_email = $1",
