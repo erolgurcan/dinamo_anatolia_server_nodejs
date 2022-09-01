@@ -6,7 +6,11 @@ const { response } = require("express");
 const jTokenGenerator = require("../utils/jTokenGenerator");
 const validInfo = require("../middleware/validInfo");
 const authorization = require("../middleware/authorization");
-require('dotenv').config();
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,

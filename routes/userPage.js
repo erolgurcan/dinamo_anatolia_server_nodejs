@@ -2,6 +2,10 @@ const router = require("express").Router();
 const authorization = require("../middleware/authorization");
 const { Client } = require("pg");
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
