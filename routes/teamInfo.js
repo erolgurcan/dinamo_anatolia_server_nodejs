@@ -76,7 +76,6 @@ router.post("/scored_table", authorization, async (req, res) => {
 
 router.post("/update-user", authorization, async (req, res) => {
   console.log(req.body);
-  console.log(req);
   const {
     user_name,
     address,
