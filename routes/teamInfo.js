@@ -2,11 +2,11 @@ const router = require("express").Router();
 const authorization = require("../middleware/authorization");
 const { Client } = require("pg");
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
-const client = new Client({  
+const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
@@ -38,7 +38,9 @@ router.get("/leagues", authorization, async (req, res) => {
 
 router.get("/get_event", authorization, async (req, res) => {
   try {
-    const result = await client.query(" select * from events where league = 'Vancouver Metro Soccer League' ");
+    const result = await client.query(
+      " select * from events where league = 'Vancouver Metro Soccer League' "
+    );
     res.json(result.rows);
   } catch (error) {
     console.log(error.message);
@@ -49,9 +51,10 @@ router.post("/standing", authorization, async (req, res) => {
   try {
     const league = req.header("league");
     const result = await client.query(
-      "select * from standing_table where league = $1 ", [league]
+      "select * from standing_table where league = $1 ",
+      [league]
     );
-    res.json(result.rows)
+    res.json(result.rows);
   } catch (error) {
     console.log(error.message);
   }
@@ -62,32 +65,36 @@ router.post("/scored_table", authorization, async (req, res) => {
     const league = req.header("league");
     console.log(league);
     const result = await client.query(
-      "select * from scored_table where league = $1", [league]
+      "select * from scored_table where league = $1",
+      [league]
     );
-    res.json(result.rows)
+    res.json(result.rows);
   } catch (error) {
     console.log(error.message);
   }
 });
 
-
-router.post("/update-user", authorization ,  async (req, res) => {
+router.post("/update-user", authorization, async (req, res) => {
+  console.log(req.body);
+  const {
+    user_name,
+    address,
+    postcode,
+    country,
+    state_region,
+    phone_number,
+    user_email,
+  } = req.body;
 
   try {
-    const { user_name, address, postcode, country, state_region, phone_number, user_email } = req.body;
-    console.log( req.body);
-
-    await client.query( `update users \
+    await client.query(`update users \
                                         set user_name  =  ${user_name} , address = ${address}, postcode = ${postcode}, country = ${country}, state_region  = ${state_region} ,phone_number  = ${phone_number} \
-                                          where user_email = ${user_email}`)
+                                          where user_email = ${user_email}`);
 
-    
     res.send(true);
-
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-} )
-
+});
 
 module.exports = router;
