@@ -76,6 +76,7 @@ router.post("/scored_table", authorization, async (req, res) => {
 
 router.post("/update-user", authorization, async (req, res) => {
   console.log(req.body);
+  console.log(req);
   const {
     user_name,
     address,
@@ -88,8 +89,8 @@ router.post("/update-user", authorization, async (req, res) => {
 
   try {
     await client.query(`update users \
-                                        set user_name  =  ${user_name} , address = ${address}, postcode = ${postcode}, country = ${country}, state_region  = ${state_region} ,phone_number  = ${phone_number} \
-                                          where user_email = ${user_email}`);
+                                        set user_name  =  '${user_name}' , address = '${address}', postcode = '${postcode}', country = '${country}', state_region  = '${state_region}' ,phone_number  = '${phone_number}' \
+                                          where user_email = '${user_email}'`);
 
     res.send(true);
   } catch (error) {
