@@ -86,10 +86,14 @@ router.post("/update-user", authorization, async (req, res) => {
     user_email,
   } = req.body;
 
+  const sqlString = `update users 
+  set user_name  =  '${user_name}' , address = '${address}', postcode = '${postcode}', country = '${country}', state_region  = '${state_region}' ,phone_number  = '${phone_number}' 
+  where user_email = '${user_email}';`
+
+  console.log(sqlString);
+
   try {
-    await client.query(`update users \
-                                        set user_name  =  '${user_name}' , address = '${address}', postcode = '${postcode}', country = '${country}', state_region  = '${state_region}' ,phone_number  = '${phone_number}' \
-                                          where user_email = '${user_email}'`);
+    await client.query(sqlString );
 
     res.send(true);
   } catch (error) {
