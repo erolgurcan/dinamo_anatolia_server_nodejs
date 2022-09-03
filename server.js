@@ -4,7 +4,14 @@ const cors = require("cors");
 const PORT = process.env.PORT || 6000;
 const path = require("path");
 const { Client } = require("pg");
-const client = new Client();
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
