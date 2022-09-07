@@ -100,7 +100,7 @@ router.post("/update-user", authorization, async (req, res) => {
 
 router.get("/get_pay_table", authorization, async (req, res) => {
   try {
-    const result = await client.query("select * from public.pay_table pt ");
+    const result = await client.query("select * from public.pay_table_view ");
     res.json(result.rows);
   } catch (error) {
     console.log(error.message);
