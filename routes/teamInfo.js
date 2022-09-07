@@ -87,14 +87,21 @@ router.post("/update-user", authorization, async (req, res) => {
     user_email,
   } = req.body;
 
-  const sqlString = `update users set user_name  =  '${user_name}' , address = '${address}', postcode = '${postcode}', country = '${country}', state_region  = '${state_region}' ,phone_number  = '${mobile}'  where user_email = '${user_email}';`
-
-  console.log(sqlString);
+  const sqlString = `update users set user_name  =  '${user_name}' , address = '${address}', postcode = '${postcode}', country = '${country}', state_region  = '${state_region}' ,phone_number  = '${mobile}'  where user_email = '${user_email}';`;
 
   try {
-    await client.query(sqlString );
+    await client.query(sqlString);
 
     res.send(true);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+router.get("/get_pay_table", authorization, async (req, res) => {
+  try {
+    const result = await client.query("select * from public.pay_table pt ");
+    res.json(result.rows);
   } catch (error) {
     console.log(error.message);
   }
