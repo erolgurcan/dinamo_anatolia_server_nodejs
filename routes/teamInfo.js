@@ -107,4 +107,24 @@ router.get("/get_pay_table", authorization, async (req, res) => {
   }
 });
 
+
+router.get("/get_refresh", authorization, async (req, res) => {
+  try {
+      const result = await client.query("select * from refresh_info ");
+      res.json(result.rows);
+
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+router.post("/get_refresh", authorization, async (req, res) => {
+  try {
+      await client.query(" update refresh_info  set refreshed_date = now() where table_info = 'team-table'"); }
+      catch (error) {
+    console.log(error.message);
+  }
+});
+
+
 module.exports = router;

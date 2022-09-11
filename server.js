@@ -41,10 +41,8 @@ app.listen(PORT, () => {
 });
 
 //DB Connect
-
 client.connect();
 
 //Routes
-
 app.use("/auth", require("./routes/jsonTokenAuth"));
 app.use("/teamInfo", require("./routes/teamInfo"));
