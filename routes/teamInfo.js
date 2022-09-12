@@ -118,7 +118,7 @@ router.get("/get_refresh", authorization, async (req, res) => {
   }
 });
 
-router.post("/get_refresh", authorization, async (req, res) => {
+router.post("/set_refresh", authorization, async (req, res) => {
   try {
       await client.query(" update refresh_info  set refreshed_date = now() where table_info = 'team-table'"); }
       catch (error) {
